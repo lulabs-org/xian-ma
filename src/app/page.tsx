@@ -1,13 +1,12 @@
-import Image from "next/image";
 import Link from "next/link";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-center py-32 px-8 bg-white font-sans">
+    <main className="flex min-h-screen w-full flex-col items-center justify-center py-32 px-8 bg-white font-sans">
       <h1 className="text-3xl font-semibold text-black text-center mb-6">
         XianMa
       </h1>
-      <p className="text-lg text-zinc-600 text-center mb-12 max-w-md">
+      <p className="text-lg text-zinc-600 text-center mb-12">
         AI-powered student behavior analysis and insights platform
       </p>
 
@@ -16,13 +15,6 @@ export default function Home() {
           href="/login"
           className="flex h-12 w-full md:w-[158px] items-center justify-center gap-2 rounded-full bg-black text-white hover:bg-gray-800 transition-colors"
         >
-          <Image
-            className="dark:invert"
-            src="/vercel.svg"
-            alt="Vercel logomark"
-            width={16}
-            height={16}
-          />
           Sign in
         </Link>
         <a
