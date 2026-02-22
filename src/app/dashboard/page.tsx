@@ -12,6 +12,7 @@ export default function Dashboard() {
   const [selectedPersonDetail, setSelectedPersonDetail] = useState<
     string | null
   >(null);
+  const [isHoveringPerson, setIsHoveringPerson] = useState(false);
 
   const people = [
     { name: "张三", age: 28, department: "技术部", phone: "13800138000" },
@@ -35,7 +36,18 @@ export default function Dashboard() {
 
   const handleBackToSelector = () => {
     setCurrentView("selector");
-    setSelectedPersonDetail(null);
+  };
+
+  const handlePersonPillClick = () => {
+    if (selectedPerson) {
+      setSelectedPersonDetail(selectedPerson);
+      setCurrentView("detail");
+      setShowPersonSelector(true);
+    }
+  };
+
+  const handlePersonPillRemove = () => {
+    setSelectedPerson(null);
   };
 
   const handleSend = () => {
@@ -56,7 +68,7 @@ export default function Dashboard() {
       {showPersonSelector && (
         <div className="absolute inset-0 flex items-center justify-center z-50">
           {currentView === "selector" ? (
-            <div className="bg-white rounded-xl p-8 shadow-2xl border border-gray-100 transform scale-110 ring-1 ring-black ring-opacity-5">
+            <div className="bg-white rounded-xl p-8 shadow-2xl border border-gray-100 transform scale-110">
               <h3 className="text-xl font-semibold mb-6 text-gray-800">
                 选择人员
               </h3>
@@ -82,7 +94,7 @@ export default function Dashboard() {
               </button>
             </div>
           ) : (
-            <div className="bg-white rounded-xl p-8 shadow-2xl border border-gray-100 min-w-[350px] transform scale-110 ring-1 ring-black ring-opacity-5">
+            <div className="bg-white rounded-xl p-8 shadow-2xl border border-gray-100 min-w-[350px] transform scale-110">
               <div className="flex items-center mb-6">
                 <button
                   onClick={handleBackToSelector}
@@ -154,10 +166,25 @@ export default function Dashboard() {
         <div className="w-[70%] max-w-md">
           {/* 选中的人员药丸 */}
           {selectedPerson && (
-            <div className="mb-2 ml-4">
-              <span className="inline-flex items-center px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">
+            <div
+              className="mb-2 ml-4 relative"
+              onMouseEnter={() => setIsHoveringPerson(true)}
+              onMouseLeave={() => setIsHoveringPerson(false)}
+            >
+              <span
+                className="inline-flex items-center px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium cursor-pointer hover:bg-green-200 transition-colors"
+                onClick={handlePersonPillClick}
+              >
                 {selectedPerson}
               </span>
+              {isHoveringPerson && (
+                <button
+                  onClick={handlePersonPillRemove}
+                  className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white rounded-full flex items-center justify-center text-xs hover:bg-red-600 transition-colors"
+                >
+                  ×
+                </button>
+              )}
             </div>
           )}
 
