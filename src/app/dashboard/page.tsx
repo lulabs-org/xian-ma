@@ -40,8 +40,7 @@ export default function Dashboard() {
 
   const handlePersonPillClick = () => {
     if (selectedPerson) {
-      setSelectedPersonDetail(selectedPerson);
-      setCurrentView("detail");
+      setCurrentView("selector");
       setShowPersonSelector(true);
     }
   };
@@ -166,25 +165,26 @@ export default function Dashboard() {
         <div className="w-[70%] max-w-md">
           {/* 选中的人员药丸 */}
           {selectedPerson && (
-            <div
-              className="mb-2 ml-4 relative"
-              onMouseEnter={() => setIsHoveringPerson(true)}
-              onMouseLeave={() => setIsHoveringPerson(false)}
-            >
+            <div className="mb-2 ml-4">
               <span
-                className="inline-flex items-center px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium cursor-pointer hover:bg-green-200 transition-colors"
+                className="inline-flex items-center px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium cursor-pointer hover:bg-green-200 transition-colors relative"
                 onClick={handlePersonPillClick}
+                onMouseEnter={() => setIsHoveringPerson(true)}
+                onMouseLeave={() => setIsHoveringPerson(false)}
               >
                 {selectedPerson}
+                {isHoveringPerson && (
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handlePersonPillRemove();
+                    }}
+                    className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white rounded-full flex items-center justify-center text-xs hover:bg-red-600 transition-colors"
+                  >
+                    ×
+                  </button>
+                )}
               </span>
-              {isHoveringPerson && (
-                <button
-                  onClick={handlePersonPillRemove}
-                  className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white rounded-full flex items-center justify-center text-xs hover:bg-red-600 transition-colors"
-                >
-                  ×
-                </button>
-              )}
             </div>
           )}
 
