@@ -13,6 +13,7 @@ export default function Dashboard() {
     string | null
   >(null);
   const [isHoveringPerson, setIsHoveringPerson] = useState(false);
+  const [showUserSidebar, setShowUserSidebar] = useState(false);
 
   const people = [
     { name: "张三", age: 28, department: "技术部", phone: "13800138000" },
@@ -26,6 +27,7 @@ export default function Dashboard() {
   const handlePersonSelect = (person: string) => {
     setSelectedPerson(person);
     setShowPersonSelector(false);
+    setShowUserSidebar(true);
   };
 
   const handlePersonRightClick = (personName: string, e: React.MouseEvent) => {
@@ -47,6 +49,10 @@ export default function Dashboard() {
 
   const handlePersonPillRemove = () => {
     setSelectedPerson(null);
+  };
+
+  const handleCloseUserSidebar = () => {
+    setShowUserSidebar(false);
   };
 
   const handleSend = () => {
@@ -157,6 +163,91 @@ export default function Dashboard() {
               )}
             </div>
           )}
+        </div>
+      )}
+
+      {/* 用户详情侧边栏 */}
+      {showUserSidebar && selectedPerson && (
+        <div className="fixed right-0 top-0 h-full w-80 bg-white shadow-2xl border-l border-gray-200 z-40 transform transition-transform duration-300">
+          <div className="p-6">
+            {/* 侧边栏头部 */}
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-xl font-semibold text-gray-800">用户详情</h3>
+              <button
+                onClick={handleCloseUserSidebar}
+                className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+              >
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            </div>
+
+            {/* 用户信息 */}
+            {people.find((p) => p.name === selectedPerson) && (
+              <div className="space-y-6">
+                <div className="text-center">
+                  <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span className="text-2xl font-bold text-blue-800">
+                      {selectedPerson.charAt(0)}
+                    </span>
+                  </div>
+                  <h4 className="text-lg font-semibold text-gray-800">
+                    {selectedPerson}
+                  </h4>
+                </div>
+
+                <div className="space-y-4">
+                  <div className="flex justify-between py-3 border-b border-gray-100">
+                    <span className="text-gray-600 font-medium">姓名:</span>
+                    <span className="font-semibold">{selectedPerson}</span>
+                  </div>
+                  <div className="flex justify-between py-3 border-b border-gray-100">
+                    <span className="text-gray-600 font-medium">年龄:</span>
+                    <span className="font-semibold">
+                      {people.find((p) => p.name === selectedPerson)?.age}岁
+                    </span>
+                  </div>
+                  <div className="flex justify-between py-3 border-b border-gray-100">
+                    <span className="text-gray-600 font-medium">部门:</span>
+                    <span className="font-semibold">
+                      {
+                        people.find((p) => p.name === selectedPerson)
+                          ?.department
+                      }
+                    </span>
+                  </div>
+                  <div className="flex justify-between py-3 border-b border-gray-100">
+                    <span className="text-gray-600 font-medium">电话:</span>
+                    <span className="font-semibold">
+                      {people.find((p) => p.name === selectedPerson)?.phone}
+                    </span>
+                  </div>
+                </div>
+
+                {/* 删除用户按钮 */}
+                <button
+                  onClick={() => {
+                    setSelectedPerson(null);
+                    setShowUserSidebar(false);
+                  }}
+                  className="w-full mt-6 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors font-medium"
+                >
+                  删除用户
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       )}
 
