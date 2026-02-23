@@ -1,4 +1,15 @@
+/*
+ * @Author: Mingxuan songmingxuan936@gmail.com
+ * @Date: 2026-02-20 21:12:25
+ * @LastEditors: Mingxuan songmingxuan936@gmail.com
+ * @LastEditTime: 2026-02-23 21:02:13
+ * @FilePath: /xian-ma/src/app/page.tsx
+ * @Description:
+ *
+ * Copyright (c) 2026 by ${git_name_email}, All Rights Reserved.
+ */
 import Link from "next/link";
+import { LoginModal } from "@/src/components/login-modal";
 
 export default function Home() {
   return (
@@ -11,12 +22,11 @@ export default function Home() {
       </p>
 
       <div className="flex flex-col sm:flex-row gap-4">
-        <Link
-          href="/login"
-          className="flex h-12 w-full md:w-[158px] items-center justify-center gap-2 rounded-full bg-black text-white hover:bg-gray-800 transition-colors"
-        >
-          Sign in
-        </Link>
+        <LoginModal>
+          <button className="flex h-12 w-full md:w-[158px] items-center justify-center gap-2 rounded-full bg-black text-white hover:bg-gray-800 transition-colors">
+            Sign in
+          </button>
+        </LoginModal>
         <a
           href="https://nextjs.org/docs"
           target="_blank"
